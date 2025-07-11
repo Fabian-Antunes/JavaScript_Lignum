@@ -11,7 +11,7 @@ loginForm.addEventListener('submit', async (event) => {
     const password = formData.get('password');
 
     try {
-        const response = await fetch('http://localhost:3000/login', {
+        const response = await fetch('/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -23,17 +23,22 @@ loginForm.addEventListener('submit', async (event) => {
 
         if (response.ok) {
             loginMessage.textContent = data.message;
-            // Aquí podrías redirigir al usuario a otra página después de un inicio de sesión exitoso
+            loginMessage.className = 'success';
+            // Redireccionar si lo deseás:
+            // window.location.href = '/dashboard.html';
         } else {
             loginMessage.textContent = data.message;
+            loginMessage.className = 'error';
         }
     } catch (error) {
         console.error('Error al intentar iniciar sesión:', error);
-       loginMessage.textContent = 'Error al intentar iniciar sesión. Por favor, intenta de nuevo más tarde.';
+        loginMessage.textContent = 'Error al intentar iniciar sesión. Por favor, intenta de nuevo más tarde.';
+        loginMessage.className = 'error';
     }
 });
 
 function cancel() {
-    // Función para cancelar, puedes implementar alguna lógica aquí si es necesario
+    loginForm.reset();
+    loginMessage.textContent = '';
+    loginMessage.className = '';
 }
-
